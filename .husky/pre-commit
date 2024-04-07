@@ -1,0 +1,2 @@
+scons lint
+scons test

@@ -1,0 +1,13 @@
+severity: low
+exclude:
+  - message: Dependencies
+    paths:
+      - node_modules
+      - venv
+
+  - message: Tooling outputs
+    paths:
+      - .DS_Store
+      - requirements.txt
+      - yarn-error.log
+      - yarn.lock

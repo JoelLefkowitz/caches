@@ -1,0 +1,43 @@
+PROJECT_NAME           = Caches
+PROJECT_BRIEF          = Extensible cache templates.
+PROJECT_NUMBER         = 0.1.0
+
+INPUT                  = src docs README.md
+USE_MDFILE_AS_MAINPAGE = README.md
+RECURSIVE              = YES
+FILE_PATTERNS          = *.cpp *.hpp *.tpp *.md
+EXCLUDE_PATTERNS       = test.cpp *.spec.cpp
+IMAGE_PATH = docs/images
+
+HTML_EXTRA_STYLESHEET  = docs/styles.css
+HTML_OUTPUT            = build
+OUTPUT_DIRECTORY       = docs
+
+EXTERNAL_PAGES         = NO
+EXTRACT_ALL            = YES
+EXTRACT_LOCAL_CLASSES  = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX = NO
+GENERATE_LEGEND        = NO
+GENERATE_TREEVIEW      = YES
+SHOW_FILES             = NO
+
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+DISABLE_INDEX          = YES
+FULL_SIDEBAR           = YES
+GRAPHICAL_HIERARCHY    = YES
+MARKDOWN_SUPPORT       = YES
+SEARCH_INCLUDES        = YES
+SEARCHENGINE           = YES
+TOC_INCLUDE_HEADINGS   = 1
+
+DOT_CLEANUP            = YES
+DOT_GRAPH_MAX_NODES    = 50
+DOT_IMAGE_FORMAT       = png
+DOT_MULTI_TARGETS      = NO
+DOT_NUM_THREADS        = 0
+DOT_UML_DETAILS        = NO
+DOT_WRAP_THRESHOLD     = 17
+HAVE_DOT               = YES
+MAX_DOT_GRAPH_DEPTH    = 0
