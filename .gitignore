@@ -1,18 +1,16 @@
+.yarn/
 node_modules/
 venv/
 
-build/
-coverage/
 dist/
 
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-
-*.dblite
 *.egg-info/
 *.o
 *.pyc
+
+*_conandeps
+*.dblite
+*conan*.sh
 
 .DS_Store
 yarn-error.log

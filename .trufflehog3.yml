@@ -1,5 +1,8 @@
 severity: low
 exclude:
+  - message: Giphy links
+    pattern: https://media.giphy.com/media
+
   - message: Dependencies
     paths:
       - node_modules
@@ -8,6 +11,7 @@ exclude:
   - message: Tooling outputs
     paths:
       - .DS_Store
+      - docs/dist
       - requirements.txt
       - yarn-error.log
       - yarn.lock

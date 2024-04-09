@@ -1,4 +1,4 @@
-#include "store_cache.tpp"
+#include "../include/store_cache.tpp"
 #include <gtest/gtest.h>
 
 using namespace caches;
@@ -7,12 +7,12 @@ class TestResource {
   public:
     std::string str;
 
-    explicit TestResource(const std::string &str) : str(str) {}
+    explicit TestResource(std::string str) : str(std::move(str)) {}
 
     TestResource(const TestResource &)            = delete;
     TestResource &operator=(const TestResource &) = delete;
 
-    TestResource(TestResource &&resource) noexcept : str(resource.str) {}
+    TestResource(TestResource &&resource) noexcept : str(std::move(resource.str)) {}
 
     TestResource &operator=(TestResource &&) = delete;
 
@@ -49,7 +49,7 @@ TEST(StoreCache, Lru) {
 
     EXPECT_TRUE(store.contains("a"));
     EXPECT_TRUE(store.contains("c"));
-    
+
     EXPECT_FALSE(store.contains("b"));
 
     EXPECT_EQ(store.at("a").str, "a");
