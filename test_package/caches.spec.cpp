@@ -1,7 +1,7 @@
-#include <caches/fifo_cache.tpp>
-#include <caches/lifo_cache.tpp>
-#include <caches/lru_cache.tpp>
-#include <caches/store_cache.tpp>
+#include <caches/queues/fifo_cache.tpp>
+#include <caches/queues/lifo_cache.tpp>
+#include <caches/stores/lru_cache.tpp>
+#include <caches/stores/store_cache.tpp>
 #include <cstddef>
 #include <gtest/gtest.h>
 

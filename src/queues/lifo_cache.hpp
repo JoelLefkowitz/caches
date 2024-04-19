@@ -1,7 +1,7 @@
 #ifndef LIFO_CACHE_HPP
 #define LIFO_CACHE_HPP
 
-#include "deque_cache.hpp"
+#include "../abstract/deque_cache.hpp"
 #include <cstddef>
 #include <deque>
 #include <numeric>

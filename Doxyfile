@@ -7,7 +7,7 @@ USE_MDFILE_AS_MAINPAGE = README.md
 RECURSIVE              = YES
 FILE_PATTERNS          = *.cpp *.hpp *.tpp *.md
 EXCLUDE_PATTERNS       = test.cpp *.spec.cpp
-IMAGE_PATH = docs/images
+IMAGE_PATH             = docs/images
 
 HTML_EXTRA_STYLESHEET  = docs/styles.css
 HTML_OUTPUT            = dist

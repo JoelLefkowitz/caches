@@ -1,7 +1,7 @@
 #ifndef LIFO_CACHE_TPP
 #define LIFO_CACHE_TPP
 
-#include "deque_cache.tpp"
+#include "../abstract/deque_cache.tpp"
 #include "lifo_cache.hpp"
 #include <cstddef>
 #include <deque>

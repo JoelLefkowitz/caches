@@ -1,7 +1,7 @@
 #ifndef FIFO_CACHE_HPP
 #define FIFO_CACHE_HPP
 
-#include "deque_cache.hpp"
+#include "../abstract/deque_cache.hpp"
 #include <cstddef>
 #include <deque>
 #include <numeric>

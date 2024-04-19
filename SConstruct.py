@@ -1,90 +1,82 @@
-import os
-import re
-import psutil
-from SCons.Environment import Environment
-from SCons.Script.Main import AddOption
-from walkmate import get_child_files as tree
+from miniscons import Build, Flag, Routine, Script, Target, Tasks, conan, flags
+from SCons.Script.Main import GetOption
+from walkmate import tree
 
-env = Environment(
-    CXXFLAGS=["-std=c++11"],
-    ENV={"PATH": os.getenv("PATH")},
-    num_jobs=psutil.cpu_count(),
+env = conan(["gtest"])
+
+tests = Build(
+    "tests",
+    tree("src", r"\.cpp$", ["main.cpp"]),
+    flags(
+        "c++11",
+        [],
+        [
+            "deprecated-declarations",
+            "macro-redefined",
+            "missing-braces",
+            "vla-extension",
+        ],
+    ),
 )
 
-conan = SConscript("SConscript_conandeps")["conandeps"]
-env.MergeFlags(conan)
+clang_format = Script(
+    "clang-format",
+    ["-i", tree(".", r"\.(cpp|hpp|tpp)$")],
+)
 
-iwyu = AddOption("--iwyu", action="store_true")
-find = lambda pattern: [source for source in tree(".") if re.search(pattern, source)]
+clang_tidy = Script(
+    "clang-tidy",
+    [tree("src", r"\.(cpp)$"), "--", [f"-I{i}" for i in env["CPPPATH"]]],
+)
 
-warnings = [
-    "-Wall",
-    "-Wconversion",
-    "-Wextra",
-    "-Wfatal-errors",
-    "-Wmissing-declarations",
-    "-Wpedantic",
-    "-Wshadow-uncaptured-local",
-    "-Wshadow",
-    "-Wno-deprecated-declarations",
-    "-Wno-macro-redefined",
-    "-Wno-missing-braces",
-    "-Wno-pessimizing-move",
-    "-Wno-unused-parameter",
-    "-Wno-vla-extension",
-]
+cppclean = Script("cppclean", ["."])
+cppcheck = Script(
+    "cppcheck",
+    [
+        tree("src", r"\.(cpp)$"),
+        [f"-I{i}" for i in env["CPPPATH"]],
+        [f"--suppress=*:{i}/*" for i in env["CPPPATH"]],
+        "--quiet",
+        "--enable=all",
+        "--inline-suppr",
+        "--suppressions-list=.cppcheck",
+    ],
+)
 
-sources = {
-    "cpp": find(r"\.cpp$"),
-    "all": find(r"\.(cpp|hpp|tpp)$"),
-    "tests": find(r"test/.*\.cpp$"),
-    "test_package": find(r"test_package/.*\.cpp$"),
-}
+doxygen = Script("doxygen", ["-q"])
+trufflehog3 = Script("trufflehog3")
 
-targets = {
-    "test": [sources["tests"], "--gtest_brief"],
-}
+cspell = Script("cspell", [".", "--dot"], ["npx"])
+prettier = Script("prettier", [".", "--write"], ["npx"])
 
-flags = {
-    "all": " ".join(sources["all"]),
-    "tidy": " ".join([i for i in sources["cpp"] if not i in sources["test_package"]]),
-    "includes": " ".join([f"-I{i}" for i in conan["CPPPATH"]]),
-    "suppressions": " ".join([f"--suppress=*:{i}/*" for i in conan["CPPPATH"]]),
-}
+cli = Tasks(
+    [tests],
+    [Target("test", tests, ["--gtest_brief"])],
+    [
+        clang_format,
+        clang_tidy,
+        cppcheck,
+        cppclean,
+        cspell,
+        doxygen,
+        prettier,
+        trufflehog3,
+    ],
+    [
+        Routine("lint", [cspell, cppclean, cppcheck, clang_tidy, trufflehog3]),
+        Routine("format", [clang_format, prettier]),
+        Routine("docs", [doxygen]),
+    ],
+    [
+        Flag("--iwyu"),
+        Flag("--list"),
+    ],
+)
 
-commands = {
-    "clang-format": f"clang-format -i {flags['all']}",
-    "clang-tidy": f"clang-tidy {flags['tidy']} -- {flags['includes']}",
-    "cppcheck": f"cppcheck . --quiet --enable=all --inline-suppr --suppressions-list=.cppcheck {flags['includes']} {flags['suppressions']}",
-    "cppclean": "cppclean .",
-    "cspell": "npx cspell . --dot",
-    "doxygen": "doxygen -q",
-    "prettier": "npx prettier . --write",
-    "trufflehog3": "trufflehog3 .",
-}
-
-aliases = {
-    "docs": ["doxygen"],
-    "lint": ["cspell", "cppclean", "cppcheck", "clang-tidy", "trufflehog3"],
-    "format": ["clang-format", "prettier"],
-}
-
-for [name, [sources, flags]] in targets.items():
-    build = f"build-{name}"
-    target = os.path.join("dist", name)
-    env.Program(target, source=sources)
-    env.Alias(build, target)
-    env.AlwaysBuild(env.Alias(name, [build], f"{target} {flags}"))
-
-for [name, command] in commands.items():
-    env.AlwaysBuild(env.Alias(name, [], command))
-
-for [name, commands] in aliases.items():
-    env.AlwaysBuild(env.Alias(name, commands))
+cli.register(env)
 
 if GetOption("iwyu"):
     env["CXX"] = "include-what-you-use"
 
-else:
-    env["CXX"] = "clang++"
-    env["CXXFLAGS"].extend(warnings)
+if GetOption("list"):
+    cli.dump()

@@ -1,4 +1,4 @@
-#include "../include/store_cache.tpp"
+#include "store_cache.tpp"
 #include <gtest/gtest.h>
 
 using namespace caches;

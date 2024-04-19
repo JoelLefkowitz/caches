@@ -1,7 +1,7 @@
 #ifndef FIFO_CACHE_TPP
 #define FIFO_CACHE_TPP
 
-#include "deque_cache.tpp"
+#include "../abstract/deque_cache.tpp"
 #include "fifo_cache.hpp"
 #include <cstddef>
 #include <deque>
