@@ -1,0 +1,36 @@
+[project]
+name = "caches"
+description = "Extensible cache templates."
+version = "0.1.0"
+
+keywords = ["cache", "fifo", "lifo", "lru"]
+
+[project.optional-dependencies]
+all = [
+    "conan==2.2.2",
+    "cppclean@git+https://github.com/myint/cppclean.git@811ed459c9f650ad6135e9c73455136af8885716",
+    "miniscons==0.8.1",
+    "SCons==4.3.0",
+    "walkmate==1.5.0",
+]
+
+[project.license]
+file = "LICENSE.md"
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/JoelLefkowitz/miniscons"
+
+[[project.authors]]
+name = "Joel Lefkowitz"
+email = "joellefkowitz@hotmail.com"
+
+[tool.promoter.metadata]
+publisher = "Conan"
+languages = ["C++"]
+frameworks = []
+paradigms = ["Object oriented"]
+lifecycle = "Alpha"

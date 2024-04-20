@@ -1,6 +1,6 @@
 # Caches
 
-...
+Extensible cache templates.
 
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yml)
 ![Quality](https://img.shields.io/codacy/grade/...)
