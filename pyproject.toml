@@ -9,7 +9,7 @@ keywords = ["cache", "fifo", "lifo", "lru"]
 all = [
     "conan==2.2.2",
     "cppclean@git+https://github.com/myint/cppclean.git@811ed459c9f650ad6135e9c73455136af8885716",
-    "miniscons==0.8.1",
+    "miniscons==0.9.0",
     "SCons==4.3.0",
     "walkmate==1.5.0",
 ]
