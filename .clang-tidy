@@ -1,6 +1,4 @@
 Checks:
-  - -*
-
   - -clanganalyzer-*
   - -clang-diagnostic-unused-command-line-argument
 

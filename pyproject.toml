@@ -11,6 +11,7 @@ all = [
     "cppclean@git+https://github.com/myint/cppclean.git@811ed459c9f650ad6135e9c73455136af8885716",
     "miniscons==0.9.0",
     "SCons==4.3.0",
+    "trufflehog3==3.0.7",
     "walkmate==1.5.0",
 ]
 
