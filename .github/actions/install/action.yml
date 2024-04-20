@@ -28,4 +28,6 @@ runs:
 
     - name: Install conan dependencies
       shell: bash
-      run: conan install .
+      run: |
+        conan profile detect
+        conan install .
