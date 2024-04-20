@@ -24,7 +24,7 @@ runs:
       
     - name: Install apt dependencies
       shell: bash
-      run: sudo apt-get install -y doxygen
+      run: sudo apt-get install -y cppcheck doxygen
 
     - name: Install conan dependencies
       shell: bash
