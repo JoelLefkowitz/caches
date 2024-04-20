@@ -21,7 +21,11 @@ runs:
     - name: Install pip dependencies
       shell: bash
       run: pip install .[all]
-
+      
     - name: Install apt dependencies
       shell: bash
       run: sudo apt-get install -y doxygen
+
+    - name: Install conan dependencies
+      shell: bash
+      run: conan install .
