@@ -2,21 +2,13 @@ from miniscons import Build, Flag, Routine, Script, Target, Tasks, conan, flags
 from SCons.Script.Main import GetOption
 from walkmate import tree
 
-env = conan(["gtest"])
+env, includes = conan()
 
 tests = Build(
     "tests",
     tree("src", r"\.cpp$", ["main.cpp"]),
-    flags(
-        "c++11",
-        [],
-        [
-            "deprecated-declarations",
-            "macro-redefined",
-            "missing-braces",
-            "vla-extension",
-        ],
-    ),
+    flags("c++11", [], []),
+    ["gtest"],
 )
 
 clang_format = Script(
@@ -26,16 +18,24 @@ clang_format = Script(
 
 clang_tidy = Script(
     "clang-tidy",
-    [tree("src", r"\.(cpp)$"), "--", [f"-I{i}" for i in env["CPPPATH"]]],
+    [
+        tree("src", r"\.(cpp)$"),
+        "--",
+        [f"-I{i}" for i in includes],
+    ],
 )
 
-cppclean = Script("cppclean", ["."])
+cppclean = Script(
+    "cppclean",
+    ["."],
+)
+
 cppcheck = Script(
     "cppcheck",
     [
         tree("src", r"\.(cpp)$"),
-        [f"-I{i}" for i in env["CPPPATH"]],
-        [f"--suppress=*:{i}/*" for i in env["CPPPATH"]],
+        [f"-I{i}" for i in includes],
+        [f"--suppress=*:{i}/*" for i in includes],
         "--quiet",
         "--enable=all",
         "--inline-suppr",
@@ -43,11 +43,44 @@ cppcheck = Script(
     ],
 )
 
-doxygen = Script("doxygen", ["-q"])
+doxygen = Script(
+    "doxygen",
+    ["-q"],
+)
+
 trufflehog3 = Script("trufflehog3")
 
-cspell = Script("cspell", [".", "--dot"], ["npx"])
-prettier = Script("prettier", [".", "--write"], ["npx"])
+cspell = Script(
+    "cspell",
+    [".", "--dot"],
+    ["npx"],
+)
+
+prettier = Script(
+    "prettier",
+    [".", "--write"],
+    ["npx"],
+)
+
+doxygen = Script(
+    "doxygen",
+    ["docs/doxygen/Doxyfile"],
+)
+
+breathe = Script(
+    "breathe-apidoc",
+    [
+        "./docs/doxygen/dist",
+        "--output-dir",
+        "docs/sphinx/dist",
+        "--members",
+    ],
+)
+
+sphinx = Script(
+    "sphinx-build",
+    ["docs/sphinx", "docs/dist"],
+)
 
 cli = Tasks(
     [tests],
@@ -61,11 +94,14 @@ cli = Tasks(
         doxygen,
         prettier,
         trufflehog3,
+        doxygen,
+        breathe,
+        sphinx,
     ],
     [
         Routine("lint", [cspell, cppclean, cppcheck, clang_tidy, trufflehog3]),
         Routine("format", [clang_format, prettier]),
-        Routine("docs", [doxygen]),
+        Routine("docs", [doxygen, breathe, sphinx]),
     ],
     [
         Flag("--iwyu"),
@@ -74,9 +110,3 @@ cli = Tasks(
 )
 
 cli.register(env)
-
-if GetOption("iwyu"):
-    env["CXX"] = "include-what-you-use"
-
-if GetOption("list"):
-    cli.dump()

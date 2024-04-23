@@ -16,6 +16,7 @@ exclude:
 
   - message: Tooling outputs
     paths:
-      - docs/dist
+      - docs/*
+      - docs/*/dist
       - yarn-error.log
       - yarn.lock

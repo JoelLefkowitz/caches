@@ -23,19 +23,27 @@ Documentation and more detailed examples are hosted on [Github Pages](https://jo
 
 ### FIFOCache
 
-![FIFOCache](docs/images/FIFOCache.png)
+<div align='center'>
+    <img width=300 height=300 src='docs/images/FIFOCache.png'alt='FIFOCache' />
+</div >
 
 ### LIFOCache
 
-![LIFOCache](docs/images/LIFOCache.png)
+<div align='center'>
+    <img width=300 height=300 src='docs/images/LIFOCache.png'alt='LIFOCache' />
+</div >
 
 ### LRUCache
 
-![LRUCache](docs/images/LRUCache.png)
+<div align='center'>
+    <img width=300 height=300 src='docs/images/LRUCache.png'alt='LRUCache' />
+</div >
 
 ### StoreCache
 
-![StoreCache](docs/images/StoreCache.png)
+<div align='center'>
+    <img width=300 height=300 src='docs/images/StoreCache.png'alt='StoreCache' />
+</div >
 
 ## Tooling
 
