@@ -1,5 +1,4 @@
 from miniscons import Build, Flag, Routine, Script, Target, Tasks, conan, flags
-from SCons.Script.Main import GetOption
 from walkmate import tree
 
 env, includes = conan()
@@ -102,10 +101,6 @@ cli = Tasks(
         Routine("lint", [cspell, cppclean, cppcheck, clang_tidy, trufflehog3]),
         Routine("format", [clang_format, prettier]),
         Routine("docs", [doxygen, breathe, sphinx]),
-    ],
-    [
-        Flag("--iwyu"),
-        Flag("--list"),
     ],
 )
 

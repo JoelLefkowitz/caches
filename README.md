@@ -3,15 +3,45 @@
 Extensible cache templates.
 
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yml)
-![Quality](https://img.shields.io/codacy/grade/...)
+![Quality](https://img.shields.io/codacy/grade/980b16173dc7422bbd4b67a79e2e985b)
 
-## Installing
+You can download the [sources](https://download-directory.github.io?url=https://github.com/joellefkowitz/caches/tree/master/src).
 
-```bash
-conan install caches
+## Motivation
+
+Consider the following scenario:
+
+- You need to generate textures for a game renderer
+- The textures can be given unique names so they can be reused
+- Eventually each texture won't be needed when the game scene moves on
+
+You need to store the textures in a `map` but you need to remove the oldest textures when adding new ones to limit the container size.
+
+This is a sufficiently frequent scenario for a generic template: `caches::StoreCache` tracks the least recently used key and allows access by reference:
+
+```cpp
+#include <string>
+#include <caches/stores/store_cache.tpp>
+
+class Texture() { ... }
+
+caches::StoreCache<Texture> cache(2);
+
+Texture texture_a;
+cache.store("a", texture_a);
+
+Texture texture_b;
+cache.store("b", texture_b);
+
+Texture texture_c;
+
+// This pops texture_a
+cache.store("c", texture_c);
+
+cache.size() -> 2UL
+cache.at("b") -> texture_b
+cache.at("c") -> texture_c
 ```
-
-You can also download the [sources](https://download-directory.github.io?url=https://github.com/joellefkowitz/caches/tree/master/src).
 
 ## Documentation
 
@@ -19,57 +49,119 @@ Documentation and more detailed examples are hosted on [Github Pages](https://jo
 
 ## Usage
 
-...
-
 ### FIFOCache
 
+- First in, first out
+- Fixed size cache with generic `T` elements
+- Access by value with `T next() const` and `T last() const`
+
 <div align='center'>
-    <img width=300 height=300 src='docs/images/FIFOCache.png'alt='FIFOCache' />
+    <img width=300 height=400 src='docs/images/FIFOCache.png'alt='FIFOCache' />
 </div >
+
+```cpp
+#include <string>
+#include <caches/queues/fifo_cache.tpp>
+
+caches::FIFOCache<std::string> cache(2);
+
+First in, first out, with a fixed size:
+
+cache.push("a");
+cache.push("b");
+cache.push("c");
+
+cache.size() -> 2UL
+cache.next() -> "b"
+cache.last() -> "c"
+```
 
 ### LIFOCache
 
+- Last in, first out
+- Fixed size cache with generic `T` elements
+- Access by value with `T next() const` and `T last() const`
+
 <div align='center'>
-    <img width=300 height=300 src='docs/images/LIFOCache.png'alt='LIFOCache' />
+    <img width=300 height=400 src='docs/images/LIFOCache.png'alt='LIFOCache' />
 </div >
+
+```cpp
+#include <string>
+#include <caches/queues/lifo_cache.tpp>
+
+caches::LIFOCache<std::string> cache(2);
+
+cache.push("a");
+cache.push("b");
+cache.push("c");
+
+cache.size() -> 2UL
+cache.next() -> "c"
+cache.last() -> "b"
+```
 
 ### LRUCache
 
+- Pops the least recently accessed key
+- Fixed size cache of generic `K: V` pairs
+- Access by value with `operator[](const K &key)`
+
 <div align='center'>
-    <img width=300 height=300 src='docs/images/LRUCache.png'alt='LRUCache' />
+    <img width=300 height=400 src='docs/images/LRUCache.png'alt='LRUCache' />
 </div >
+
+```cpp
+#include <string>
+#include <caches/stores/lru_cache.tpp>
+
+caches::LRUCache<std::string, int> cache(2);
+
+cache.store("a", 1);
+cache.store("b", 2);
+cache.store("c", 3);
+
+cache.size() -> 2UL
+cache["b"] ->  2
+cache["c"] ->  3
+```
 
 ### StoreCache
 
+- Pops the least recently accessed key
+- Fixed size cache of `string: T` pairs
+- Access by reference with `T &at(const std::string &key)`
+
 <div align='center'>
-    <img width=300 height=300 src='docs/images/StoreCache.png'alt='StoreCache' />
+    <img width=300 height=400 src='docs/images/StoreCache.png'alt='StoreCache' />
 </div >
+
+```cpp
+#include <string>
+#include <caches/stores/store_cache.tpp>
+
+caches::StoreCache<int> cache(2);
+
+cache.store("a", 1);
+cache.store("b", 2);
+cache.store("c", 3);
+
+cache.size() -> 2UL
+cache.at("b") -> 2
+cache.at("c") -> 3
+```
 
 ## Tooling
 
-...
+### Dependencies
 
-pip - Python dependencies
-yarn - JavaScript dependencies
-conan - C++ dependencies and publisher
-scons - C++ build system and task runner
-husky - Git hooks
-GitHub Actions - CI
+To install dependencies:
 
-Linters
-cspell
-cppclean
-cppcheck
-iwyu
-trufflehog
-clang-tidy
-
-Formatters
-prettier
-clang-format
-
-Contributing:
-Issue, PR, Actions
+```bash
+yarn --immutable
+pip install .[all]
+conan install .
+```
 
 ### Tests
 
@@ -128,7 +220,3 @@ Lots of love to the open source community!
     <img width=200 height=200 src='https://media.giphy.com/media/KEAAbQ5clGWJwuJuZB/giphy.gif' alt='Love each other' />
     <img width=200 height=200 src='https://media.giphy.com/media/WRWykrFkxJA6JJuTvc/giphy.gif' alt="It's ok to have a bad day" />
 </div>
-
-// Handle .cpp sources
-// Build and publish on windows
-// Remap includes paths to be simpler
