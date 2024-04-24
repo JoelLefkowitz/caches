@@ -55,6 +55,7 @@
     "libdirs",
     "libpath",
     "mainpage",
+    "matplotlib",
     "mdfile",
     "miniscons",
     "nodiscard",

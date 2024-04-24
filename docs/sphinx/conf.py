@@ -17,18 +17,6 @@ extensions = [
     "sphinxext.opengraph",
 ]
 
-shutil.copytree(
-    "../../docs/images",
-    "../../docs/dist/docs/images",
-    dirs_exist_ok=True,
-)
-
-for path in glob(f"../../*.md"):
-    shutil.copyfile(
-        path,
-        path.replace("../..", "../dist"),
-    )
-
 myst_all_links_external = True
 
 breathe_show_include = False
@@ -66,3 +54,14 @@ html_theme_options = {
         "color-highlight-on-target": "#202020",
     },
 }
+
+
+def build(app, build):
+    shutil.copytree("docs/images", "docs/dist/docs/images", dirs_exist_ok=True)
+
+    for path in glob(f"*.md"):
+        shutil.copyfile(path, f"docs/dist/{path}")
+
+
+def setup(app):
+    app.connect("build-finished", build)
