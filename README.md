@@ -158,7 +158,7 @@ cache.at("c") -> 3
 To install dependencies:
 
 ```bash
-yarn --immutable
+yarn install
 pip install .[all]
 conan install .
 ```

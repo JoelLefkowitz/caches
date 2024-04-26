@@ -51,7 +51,7 @@ trufflehog3 = Script("trufflehog3")
 
 cspell = Script(
     "cspell",
-    [".", "--dot"],
+    [".", "--dot", "--gitignore"],
     ["npx"],
 )
 

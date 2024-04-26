@@ -22,14 +22,17 @@ all = [
 ]
 
 [project.license]
+name = "MIT"
 file = "LICENSE.md"
+content-type = "text/markdown"
 
 [project.readme]
 file = "README.md"
 content-type = "text/markdown"
 
 [project.urls]
-Homepage = "https://github.com/JoelLefkowitz/miniscons"
+repository = "https://github.com/JoelLefkowitz/caches"
+homepage = "https://joellefkowitz.github.io/caches"
 
 [[project.authors]]
 name = "Joel Lefkowitz"
