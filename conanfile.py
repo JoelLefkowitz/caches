@@ -7,7 +7,7 @@ from conan.tools.scons import SConsDeps
 
 class Recipe(ConanFile):
     name = "caches"
-    version = "0.0.0"
+    version = "0.1.0"
 
     def build_requirements(self):
         self.test_requires("gtest/1.12.1")
