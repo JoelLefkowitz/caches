@@ -38,7 +38,7 @@ homepage = "https://joellefkowitz.github.io/caches"
 name = "Joel Lefkowitz"
 email = "joellefkowitz@hotmail.com"
 
-[tool.promoter.metadata]
+[tool.metadata]
 publisher = "Conan"
 languages = ["C++"]
 frameworks = []
