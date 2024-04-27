@@ -1,14 +1,26 @@
-from miniscons import Build, Flag, Routine, Script, Target, Tasks, conan, flags
+from miniscons import (
+    Build,
+    Flag,
+    Routine,
+    Script,
+    Target,
+    Tasks,
+    conan,
+    packages,
+    flags,
+)
 from walkmate import tree
 
-env, includes = conan()
+env = conan()
 
 tests = Build(
     "tests",
     tree("src", r"\.cpp$", ["main.cpp"]),
     flags("c++11", [], []),
-    ["gtest"],
+    packages(["gtest"]),
 )
+
+includes = tests.packages["CPPPATH"]
 
 clang_format = Script(
     "clang-format",

@@ -21,6 +21,7 @@
     "cppcheck",
     "cppclean",
     "cppcoreguidelines",
+    "cpppath",
     "cstddef",
     "dblite",
     "deque",
