@@ -1,3 +1,4 @@
+__pycache__/
 .DS_Store
 .yarn/
 *_conandeps
@@ -6,6 +7,7 @@
 *.o
 *conan*.sh
 dist/
+metadata/
 node_modules/
 venv/
 yarn-error.log

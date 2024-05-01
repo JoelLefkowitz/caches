@@ -1,6 +1,3 @@
-PROJECT_NAME           = Caches
-PROJECT_BRIEF          = Extensible cache templates.
-
 INPUT                  = src docs
 RECURSIVE              = YES
 FILE_PATTERNS          = *.cpp *.hpp *.tpp *.md

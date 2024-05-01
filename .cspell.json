@@ -38,6 +38,7 @@
     "nodiscard",
     "opengraph",
     "psutil",
+    "pycache",
     "pyproject",
     "scons",
     "searchengine",

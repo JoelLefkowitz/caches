@@ -1,11 +1,18 @@
-import psutil
-from functools import reduce
-from miniscons import Build, Target, Tasks, conan, flags
-from SCons.Script import SConscript
+from miniscons import Build, Target, Tasks, conan, flags, packages
 from walkmate import tree
 
-env, includes = conan()
-tests = Build("tests", tree(".", r"\.cpp$"), flags("c++11"), ["gtest"])
+env = conan()
 
-cli = Tasks([tests], [Target("test", tests, ["--gtest_brief"])])
+tests = Build(
+    "tests",
+    tree("src", r"\.cpp$", ["main.cpp"]),
+    flags("c++11"),
+    packages(["gtest"]),
+)
+
+cli = Tasks(
+    [tests],
+    [Target("test", tests, ["--gtest_brief"])],
+)
+
 cli.register(env)
