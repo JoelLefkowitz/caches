@@ -1,5 +1,5 @@
-#ifndef FIFO_CACHE_TPP
-#define FIFO_CACHE_TPP
+#ifndef CACHES_QUEUES_FIFO_CACHE_TPP
+#define CACHES_QUEUES_FIFO_CACHE_TPP
 
 #include "../abstract/deque_cache.tpp"
 #include "fifo_cache.hpp"

@@ -1,5 +1,5 @@
-#ifndef STORE_CACHE_TPP
-#define STORE_CACHE_TPP
+#ifndef CACHES_STORES_STORE_CACHE_TPP
+#define CACHES_STORES_STORE_CACHE_TPP
 
 #include "store_cache.hpp"
 #include <cstddef>

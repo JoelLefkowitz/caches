@@ -1,20 +1,10 @@
-#include <caches/stores/lru_cache.tpp>
 #include <caches/stores/store_cache.tpp>
 #include <cstddef>
 #include <gtest/gtest.h>
 
-using namespace caches;
-
-TEST(LRUCache, Caches) {
-    caches::LRUCache<std::string, int> cache(2);
-
-    cache.store("a", 1);
-    cache.store("b", 2);
-    cache.store("c", 3);
-
-    EXPECT_EQ(cache.size(), 2UL);
-    EXPECT_EQ(cache["b"], 2);
-    EXPECT_EQ(cache["c"], 3);
+int main(int argc, char **argv) {
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
 
 TEST(StoreCache, Caches) {

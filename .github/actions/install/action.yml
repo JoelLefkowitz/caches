@@ -18,6 +18,10 @@ runs:
         python-version: ${{ inputs.python-version }}
         cache: pip
 
+    - name: Install yarn dependencies
+      shell: bash
+      run: yarn install --immutable
+
     - name: Install pip dependencies
       shell: bash
       run: pip install .[all]

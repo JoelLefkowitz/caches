@@ -1,5 +1,5 @@
-#ifndef DEQUE_CACHE_TPP
-#define DEQUE_CACHE_TPP
+#ifndef CACHES_ABSTRACT_DEQUE_CACHE_TPP
+#define CACHES_ABSTRACT_DEQUE_CACHE_TPP
 
 #include "deque_cache.hpp"
 #include <cstddef>

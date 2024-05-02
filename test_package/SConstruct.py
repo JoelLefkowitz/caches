@@ -5,7 +5,7 @@ env = conan()
 
 tests = Build(
     "tests",
-    tree("src", r"\.cpp$", ["main.cpp"]),
+    tree(".", r"\.cpp$", ["main.cpp"]),
     flags("c++11"),
     packages(["gtest"]),
 )

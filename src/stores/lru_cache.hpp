@@ -1,5 +1,5 @@
-#ifndef LRU_CACHE_HPP
-#define LRU_CACHE_HPP
+#ifndef CACHES_STORES_LRU_CACHE_HPP
+#define CACHES_STORES_LRU_CACHE_HPP
 
 #include <cstddef>
 #include <deque>

@@ -5,8 +5,6 @@ Extensible cache templates.
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yml)
 ![Quality](https://img.shields.io/codacy/grade/980b16173dc7422bbd4b67a79e2e985b)
 
-You can download the [sources](https://download-directory.github.io?url=https://github.com/joellefkowitz/caches/tree/master/src).
-
 ## Motivation
 
 Consider the following scenario:
@@ -42,6 +40,10 @@ cache.size() -> 2UL
 cache.at("b") -> texture_b
 cache.at("c") -> texture_c
 ```
+
+## Installing
+
+You can download the [sources](https://download-directory.github.io?url=https://github.com/joellefkowitz/caches/tree/master/src).
 
 ## Documentation
 

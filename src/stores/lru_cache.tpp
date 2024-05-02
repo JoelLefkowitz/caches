@@ -1,5 +1,5 @@
-#ifndef LRU_CACHE_TPP
-#define LRU_CACHE_TPP
+#ifndef CACHES_STORES_LRU_CACHE_TPP
+#define CACHES_STORES_LRU_CACHE_TPP
 
 #include "lru_cache.hpp"
 #include <cstddef>

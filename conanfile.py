@@ -29,4 +29,3 @@ class Recipe(ConanFile):
             f"{self.build_folder}/src",
             f"{self.package_folder}/include/{self.name}",
         )
-

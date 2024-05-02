@@ -1,5 +1,5 @@
-#ifndef LIFO_CACHE_TPP
-#define LIFO_CACHE_TPP
+#ifndef CACHES_QUEUES_LIFO_CACHE_TPP
+#define CACHES_QUEUES_LIFO_CACHE_TPP
 
 #include "../abstract/deque_cache.tpp"
 #include "lifo_cache.hpp"

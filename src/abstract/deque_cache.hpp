@@ -1,5 +1,5 @@
-#ifndef DEQUE_CACHE_HPP
-#define DEQUE_CACHE_HPP
+#ifndef CACHES_ABSTRACT_DEQUE_CACHE_HPP
+#define CACHES_ABSTRACT_DEQUE_CACHE_HPP
 
 #include <cstddef>
 #include <deque>

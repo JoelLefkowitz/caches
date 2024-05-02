@@ -1,5 +1,5 @@
-#ifndef STORE_CACHE_HPP
-#define STORE_CACHE_HPP
+#ifndef CACHES_STORES_STORE_CACHE_HPP
+#define CACHES_STORES_STORE_CACHE_HPP
 
 #include <cstddef>
 #include <deque>

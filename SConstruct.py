@@ -94,8 +94,10 @@ sphinx = Script(
 )
 
 cli = Tasks(
-    [tests],
-    [Target("test", tests, ["--gtest_brief"])],
+    [shared, tests],
+    [
+        Target("test", tests, ["--gtest_brief"]),
+    ],
     [
         clang_format,
         clang_tidy,

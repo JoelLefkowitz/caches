@@ -1,5 +1,5 @@
-#ifndef FIFO_CACHE_HPP
-#define FIFO_CACHE_HPP
+#ifndef CACHES_QUEUES_FIFO_CACHE_HPP
+#define CACHES_QUEUES_FIFO_CACHE_HPP
 
 #include "../abstract/deque_cache.hpp"
 #include <cstddef>
