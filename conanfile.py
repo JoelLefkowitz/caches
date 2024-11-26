@@ -11,7 +11,11 @@ class Recipe(ConanFile):
         self.test_requires("gtest/1.12.1")
 
     def export_sources(self):
-        for source in ["src/*.[cht]pp", "SConstruct.py"]:
+        for source in [
+            "conanfile.py",
+            "SConstruct.py",
+            "src/*.[cht]pp",
+        ]:
             copy(
                 self,
                 source,
@@ -28,4 +32,10 @@ class Recipe(ConanFile):
             "*.[ht]pp",
             f"{self.build_folder}/src",
             f"{self.package_folder}/include/{self.name}",
+        )
+        copy(
+            self,
+            "*.a",
+            f"{self.build_folder}/dist",
+            f"{self.package_folder}/lib",
         )

@@ -43,7 +43,11 @@ cache.at("c") -> texture_c
 
 ## Installing
 
-You can download the [sources](https://download-directory.github.io?url=https://github.com/joellefkowitz/caches/tree/master/src).
+```bash
+conan search caches
+```
+
+You can also download the [sources](https://download-directory.github.io?url=https://github.com/joellefkowitz/caches/tree/master/src).
 
 ## Documentation
 

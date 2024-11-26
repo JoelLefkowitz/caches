@@ -1,3 +1,4 @@
+from conanfile import Recipe
 from miniscons import (
     Build,
     Flag,
@@ -15,72 +16,72 @@ env = conan()
 
 tests = Build(
     "tests",
-    tree("src", r"\.cpp$", ["main.cpp"]),
+    tree("src", r"\.cpp$"),
     flags("c++11"),
     packages(["gtest"]),
 )
 
-includes = tests.packages["CPPPATH"]
-
-clang_format = Script(
-    "clang-format",
-    ["-i", tree(".", r"\.(cpp|hpp|tpp)$")],
+test = Target(
+    "test",
+    tests,
+    ["--gtest_brief"],
 )
 
-clang_tidy = Script(
-    "clang-tidy",
-    [
-        tree("src", r"\.(cpp)$"),
-        "--",
-        [f"-I{i}" for i in includes],
-    ],
+includes = tests.packages["CPPPATH"]
+
+cspell = Script(
+    "cspell",
+    ["npx", "cspell", ".", "--dot", "--gitignore"],
 )
 
 cppclean = Script(
     "cppclean",
-    ["."],
+    ["cppclean", "."],
 )
 
 cppcheck = Script(
     "cppcheck",
     [
+        "cppcheck",
         tree("src", r"\.(cpp)$"),
         [f"-I{i}" for i in includes],
-        [f"--suppress=*:{i}/*" for i in includes],
         "--quiet",
         "--enable=all",
-        "--inline-suppr",
         "--suppressions-list=.cppcheck",
+        "--inline-suppr",
+        [f"--suppress=*:{i}/*" for i in includes],
     ],
 )
 
-doxygen = Script(
-    "doxygen",
-    ["-q"],
+clang_tidy = Script(
+    "clang-tidy",
+    ["clang-tidy", tree("src", r"\.(cpp)$"), "--", [f"-I{i}" for i in includes]],
 )
 
-trufflehog3 = Script("trufflehog3")
+trufflehog = Script(
+    "trufflehog",
+    ["trufflehog3"],
+)
 
-cspell = Script(
-    "cspell",
-    [".", "--dot", "--gitignore"],
-    ["npx"],
+clang_format = Script(
+    "clang-format",
+    ["clang-format", "-i", tree(".", r"\.(cpp|hpp|tpp)$")],
 )
 
 prettier = Script(
     "prettier",
-    [".", "--write"],
-    ["npx"],
+    ["npx", "prettier", ".", "--write"],
 )
 
 doxygen = Script(
     "doxygen",
-    ["docs/doxygen/Doxyfile"],
+    ["doxygen", "docs/doxygen/Doxyfile"],
 )
 
 breathe = Script(
-    "breathe-apidoc",
+    "breathe",
     [
+        "breathe-apidoc",
         "./docs/doxygen/dist",
         "--output-dir",
         "docs/sphinx/dist",
@@ -90,32 +91,29 @@ breathe = Script(
 
 sphinx = Script(
     "sphinx-build",
-    ["docs/sphinx", "docs/dist"],
+    ["sphinx-build", "docs/sphinx", "docs/dist"],
+)
+
+lint = Routine(
+    "lint",
+    [cspell, cppclean, cppcheck, clang_tidy, trufflehog],
+)
+
+fmt = Routine(
+    "format",
+    [clang_format, prettier],
+)
+
+docs = Routine(
+    "docs",
+    [doxygen, breathe, sphinx],
 )
 
 cli = Tasks(
-    [shared, tests],
-    [
-        Target("test", tests, ["--gtest_brief"]),
-    ],
-    [
-        clang_format,
-        clang_tidy,
-        cppcheck,
-        cppclean,
-        cspell,
-        doxygen,
-        prettier,
-        trufflehog3,
-        doxygen,
-        breathe,
-        sphinx,
-    ],
-    [
-        Routine("lint", [cspell, cppclean, cppcheck, trufflehog3]),
-        Routine("format", [clang_format, prettier]),
-        Routine("docs", [doxygen, breathe, sphinx]),
-    ],
+    [tests],
+    [test],
+    [*lint.scripts, *fmt.scripts, *docs.scripts],
+    [lint, fmt, docs],
 )
 
 cli.register(env)
