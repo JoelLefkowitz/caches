@@ -2,7 +2,7 @@
 
 Extensible cache templates.
 
-![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yml)
+![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yaml)
 ![Quality](https://img.shields.io/codacy/grade/980b16173dc7422bbd4b67a79e2e985b)
 
 ## Motivation

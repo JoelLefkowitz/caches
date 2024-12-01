@@ -5,6 +5,7 @@ inputs:
   node-version:
     description: Node version
     default: "18"
+
   python-version:
     description: Python version
     default: "3.10"

@@ -59,7 +59,7 @@ clang_tidy = Script(
 
 trufflehog = Script(
     "trufflehog",
-    ["trufflehog3"],
+    ["trufflehog3", "-c", ".trufflehog3.yaml"],
 )
 
 clang_format = Script(
