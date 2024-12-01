@@ -41,10 +41,10 @@ runs:
 
     - name: Install apt dependencies
       shell: bash
-      run: sudo apt-get install -y cppcheck doxygen
+      run: sudo apt-get install -y doxygen
 
     - name: Install conan dependencies
       shell: bash
       run: |
         conan profile detect
-        conan install .
+        conan install . --build=missing
