@@ -2,7 +2,7 @@ from conan import ConanFile
 from conan.tools.scons import SConsDeps
 
 
-class Recipe(ConanFile):
+class TestPackageConan(ConanFile):
     def requirements(self):
         self.requires(self.tested_reference_str)
 
