@@ -5,43 +5,9 @@ Extensible cache templates.
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yaml)
 ![Quality](https://img.shields.io/codacy/grade/980b16173dc7422bbd4b67a79e2e985b)
 
-## Motivation
-
-Consider the following scenario:
-
-- You need to generate textures for a game renderer
-- The textures can be given unique names so they can be reused
-- Eventually each texture won't be needed when the game scene moves on
-
-You need to store the textures in a `map` but you need to remove the oldest textures when adding new ones to limit the container size.
-
-This is a sufficiently frequent scenario for a generic template: `caches::StoreCache` tracks the least recently used key and allows access by reference:
-
-```cpp
-#include <string>
-#include <caches/stores/store_cache.tpp>
-
-class Texture() { ... }
-
-caches::StoreCache<Texture> cache(2);
-
-Texture texture_a;
-cache.store("a", texture_a);
-
-Texture texture_b;
-cache.store("b", texture_b);
-
-Texture texture_c;
-
-// This pops texture_a
-cache.store("c", texture_c);
-
-cache.size() -> 2UL
-cache.at("b") -> texture_b
-cache.at("c") -> texture_c
-```
-
 ## Installing
+
+`caches` is a header only library and is compatible with C++11.
 
 ```bash
 conan search caches
@@ -155,6 +121,42 @@ cache.store("c", 3);
 cache.size() -> 2UL
 cache.at("b") -> 2
 cache.at("c") -> 3
+```
+
+### Use case for `caches::StoreCache`
+
+Consider the following scenario:
+
+- You need to generate textures for a game renderer
+- The textures can be given unique names so they can be reused
+- Eventually each texture won't be needed when the game scene moves on
+
+You need to store the textures in a `map` but you need to remove the oldest textures when adding new ones to limit the container size.
+
+This is a sufficiently frequent scenario for a generic template: `caches::StoreCache` which tracks the least recently used key and allows access by reference:
+
+```cpp
+#include <string>
+#include <caches/stores/store_cache.tpp>
+
+class Texture() { ... }
+
+caches::StoreCache<Texture> cache(2);
+
+Texture texture_a;
+cache.store("a", texture_a);
+
+Texture texture_b;
+cache.store("b", texture_b);
+
+Texture texture_c;
+
+// This pops texture_a
+cache.store("c", texture_c);
+
+cache.size() -> 2UL
+cache.at("b") -> texture_b
+cache.at("c") -> texture_c
 ```
 
 ## Tooling
