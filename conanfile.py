@@ -9,7 +9,7 @@ class CachesConan(ConanFile):
     name = "caches"
     description = "Extensible cache templates."
 
-    version = "0.3.0"
+    version = "0.3.1"
     license = "MIT"
 
     url = "https://github.com/conan-io/conan-center-index"
