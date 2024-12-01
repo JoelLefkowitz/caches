@@ -1,18 +1,25 @@
-from miniscons import Build, Target, Tasks, conan, flags, packages
-from walkmate import tree
+import os
+from SCons.Environment import Environment
+from SCons.Script import SConscript
 
-env = conan()
+flags = SConscript("SConscript_conandeps")
+env = Environment(CXXFLAGS=["-std=c++11"], LIBS=["gtest"])
 
-tests = Build(
-    "tests",
-    tree(".", r"\.cpp$", ["main.cpp"]),
-    flags("c++11"),
-    packages(["gtest"]),
+for package in ["conandeps", "gtest"]:
+    env.MergeFlags(flags[package])
+
+if not os.path.exists("dist"):
+    os.mkdir("dist")
+
+tests = env.Program(
+    "./dist/tests",
+    ["test.cpp"],
 )
 
-cli = Tasks(
+test = env.Alias(
+    "test",
     [tests],
-    [Target("test", tests, ["--gtest_brief"])],
+    "./dist/tests --gtest_brief",
 )
 
-cli.register(env)
+env.AlwaysBuild(test)
