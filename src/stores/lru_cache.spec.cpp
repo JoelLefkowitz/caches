@@ -15,13 +15,21 @@ TEST(LRUCache, Store) {
 }
 
 TEST(LRUCache, Limit) {
-    LRUCache<std::string, int> cache(1);
+    LRUCache<std::string, int> cache(2);
+    EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_EQ(cache.space(), 2UL);
 
     cache.store("a", 1);
-    cache.store("b", 2);
+    EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_EQ(cache.space(), 1UL);
 
-    EXPECT_FALSE(cache.contains("a"));
-    EXPECT_TRUE(cache.contains("b"));
+    cache.store("b", 2);
+    EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 0UL);
+
+    cache.store("c", 3);
+    EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 0UL);
 }
 
 TEST(LRUCache, Lru) {
@@ -35,6 +43,7 @@ TEST(LRUCache, Lru) {
     cache.store("c", 3);
 
     EXPECT_TRUE(cache.contains("a"));
-    EXPECT_FALSE(cache.contains("b"));
     EXPECT_TRUE(cache.contains("c"));
+    
+    EXPECT_FALSE(cache.contains("b"));
 }

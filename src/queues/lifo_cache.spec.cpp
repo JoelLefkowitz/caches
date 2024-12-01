@@ -4,27 +4,32 @@
 
 using namespace caches;
 
-TEST(LIFOCache, Push) {
+TEST(LIFOCache, Fill) {
     LIFOCache<int> cache(3);
     EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_EQ(cache.space(), 3UL);
 
     cache.push(1);
     EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_EQ(cache.space(), 2UL);
     EXPECT_EQ(cache.next(), 1);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(2);
     EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 1UL);
     EXPECT_EQ(cache.next(), 2);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(3);
     EXPECT_EQ(cache.size(), 3UL);
+    EXPECT_EQ(cache.space(), 0UL);
     EXPECT_EQ(cache.next(), 3);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(4);
     EXPECT_EQ(cache.size(), 3UL);
+    EXPECT_EQ(cache.space(), 0UL);
     EXPECT_EQ(cache.next(), 4);
     EXPECT_EQ(cache.last(), 2);
 }

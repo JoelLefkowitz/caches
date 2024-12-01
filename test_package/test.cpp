@@ -31,52 +31,62 @@ class TestResource {
     bool operator==(const TestResource &rhs) const { return str == rhs.str; }
 };
 
-TEST(FIFOCache, Push) {
+TEST(FIFOCache, Fill) {
     FIFOCache<int> cache(3);
     EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_EQ(cache.space(), 3UL);
 
     cache.push(1);
     EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_EQ(cache.space(), 2UL);
     EXPECT_EQ(cache.next(), 1);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(2);
     EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 1UL);
     EXPECT_EQ(cache.next(), 1);
     EXPECT_EQ(cache.last(), 2);
 
     cache.push(3);
     EXPECT_EQ(cache.size(), 3UL);
+    EXPECT_EQ(cache.space(), 0UL);
     EXPECT_EQ(cache.next(), 1);
     EXPECT_EQ(cache.last(), 3);
 
     cache.push(4);
     EXPECT_EQ(cache.size(), 3UL);
+    EXPECT_EQ(cache.space(), 0UL);
     EXPECT_EQ(cache.next(), 2);
     EXPECT_EQ(cache.last(), 4);
 }
 
-TEST(LIFOCache, Push) {
+TEST(LIFOCache, Fill) {
     LIFOCache<int> cache(3);
     EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_EQ(cache.space(), 3UL);
 
     cache.push(1);
     EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_EQ(cache.space(), 2UL);
     EXPECT_EQ(cache.next(), 1);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(2);
     EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 1UL);
     EXPECT_EQ(cache.next(), 2);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(3);
     EXPECT_EQ(cache.size(), 3UL);
+    EXPECT_EQ(cache.space(), 0UL);
     EXPECT_EQ(cache.next(), 3);
     EXPECT_EQ(cache.last(), 1);
 
     cache.push(4);
     EXPECT_EQ(cache.size(), 3UL);
+    EXPECT_EQ(cache.space(), 0UL);
     EXPECT_EQ(cache.next(), 4);
     EXPECT_EQ(cache.last(), 2);
 }
@@ -92,25 +102,23 @@ TEST(LRUCache, Lru) {
     cache.store("c", 3);
 
     EXPECT_TRUE(cache.contains("a"));
-    EXPECT_FALSE(cache.contains("b"));
     EXPECT_TRUE(cache.contains("c"));
+
+    EXPECT_FALSE(cache.contains("b"));
 }
 
 TEST(StoreCache, Lru) {
-    StoreCache<TestResource> store(2);
+    StoreCache<TestResource> cache(2);
 
-    store.store("a", TestResource("a"));
-    store.store("b", TestResource("b"));
+    cache.store("a", TestResource("a"));
+    cache.store("b", TestResource("b"));
 
-    store.at("a");
+    cache.at("a");
 
-    store.store("c", TestResource("c"));
+    cache.store("c", TestResource("c"));
 
-    EXPECT_TRUE(store.contains("a"));
-    EXPECT_TRUE(store.contains("c"));
+    EXPECT_TRUE(cache.contains("a"));
+    EXPECT_TRUE(cache.contains("c"));
 
-    EXPECT_FALSE(store.contains("b"));
-
-    EXPECT_EQ(store.at("a").str, "a");
-    EXPECT_EQ(store.at("c").str, "c");
+    EXPECT_FALSE(cache.contains("b"));
 }

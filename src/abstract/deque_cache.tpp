@@ -38,6 +38,12 @@ size_t caches::DequeCache<T>::size() const {
 }
 
 template <typename T>
+size_t caches::DequeCache<T>::space() const {
+    auto current = size();
+    return limit > current ? limit - current : 0;
+}
+
+template <typename T>
 bool caches::DequeCache<T>::empty() const {
     return cache.empty();
 }

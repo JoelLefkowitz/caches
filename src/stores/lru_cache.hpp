@@ -28,6 +28,7 @@ namespace caches {
         V operator[](const K &key);
 
         size_t size() const;
+        size_t space() const;
 
         bool contains(const K &key) const;
 

@@ -20,6 +20,12 @@ size_t caches::LRUCache<K, V>::size() const {
 }
 
 template <typename K, typename V>
+size_t caches::LRUCache<K, V>::space() const {
+    auto current = size();
+    return limit > current ? limit - current : 0;
+}
+
+template <typename K, typename V>
 V caches::LRUCache<K, V>::operator[](const K &key) {
     auto it = map.find(key);
 

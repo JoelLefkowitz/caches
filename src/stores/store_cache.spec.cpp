@@ -21,37 +21,46 @@ class TestResource {
     bool operator==(const TestResource &rhs) const { return str == rhs.str; }
 };
 
+TEST(StoreCache, Store) {
+    StoreCache<TestResource> cache;
+
+    cache.store("a", TestResource("a"));
+    EXPECT_EQ(cache.at("a").str, "a");
+
+    cache.store("b", TestResource("b"));
+    EXPECT_EQ(cache.at("b").str, "b");
+}
+
 TEST(StoreCache, Limit) {
-    StoreCache<TestResource> store(2);
+    StoreCache<TestResource> cache(2);
+    EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_EQ(cache.space(), 2UL);
 
-    store.store("a", TestResource("a"));
-    store.store("b", TestResource("b"));
-    store.store("c", TestResource("c"));
+    cache.store("a", TestResource("a"));
+    EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_EQ(cache.space(), 1UL);
 
-    EXPECT_TRUE(store.contains("b"));
-    EXPECT_TRUE(store.contains("c"));
+    cache.store("b", TestResource("b"));
+    EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 0UL);
 
-    EXPECT_FALSE(store.contains("a"));
-
-    EXPECT_EQ(store.at("b").str, "b");
-    EXPECT_EQ(store.at("c").str, "c");
+    cache.store("c", TestResource("c"));
+    EXPECT_EQ(cache.size(), 2UL);
+    EXPECT_EQ(cache.space(), 0UL);
 }
 
 TEST(StoreCache, Lru) {
-    StoreCache<TestResource> store(2);
+    StoreCache<TestResource> cache(2);
 
-    store.store("a", TestResource("a"));
-    store.store("b", TestResource("b"));
+    cache.store("a", TestResource("a"));
+    cache.store("b", TestResource("b"));
 
-    store.at("a");
+    cache.at("a");
 
-    store.store("c", TestResource("c"));
+    cache.store("c", TestResource("c"));
 
-    EXPECT_TRUE(store.contains("a"));
-    EXPECT_TRUE(store.contains("c"));
+    EXPECT_TRUE(cache.contains("a"));
+    EXPECT_TRUE(cache.contains("c"));
 
-    EXPECT_FALSE(store.contains("b"));
-
-    EXPECT_EQ(store.at("a").str, "a");
-    EXPECT_EQ(store.at("c").str, "c");
+    EXPECT_FALSE(cache.contains("b"));
 }

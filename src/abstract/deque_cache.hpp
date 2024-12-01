@@ -35,6 +35,7 @@ namespace caches {
         typename std::deque<T>::const_iterator end() const;
 
         size_t size() const;
+        size_t space() const;
 
         bool empty() const;
     };

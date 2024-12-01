@@ -28,6 +28,7 @@ namespace caches {
         explicit StoreCache(size_t limit = 100);
 
         size_t size() const;
+        size_t space() const;
 
         bool contains(const std::string &key) const;
 
