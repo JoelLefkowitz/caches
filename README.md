@@ -2,10 +2,6 @@
 
 Extensible cache templates.
 
-c++11
-dependency free
-header only
-
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yml)
 ![Quality](https://img.shields.io/codacy/grade/980b16173dc7422bbd4b67a79e2e985b)
 

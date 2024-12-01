@@ -18,6 +18,7 @@
     "clanganalyzer",
     "conandeps",
     "conanfile",
+    "corepack",
     "cppcheck",
     "cppclean",
     "cppcoreguidelines",
