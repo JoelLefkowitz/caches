@@ -34,6 +34,7 @@ class CachesConan(ConanFile):
     def export_sources(self):
         for source in [
             "conanfile.py",
+            "LICENSE.md",
             "SConstruct.py",
             "src/*.[cht]pp",
         ]:
@@ -48,6 +49,12 @@ class CachesConan(ConanFile):
         SConsDeps(self).generate()
 
     def package(self):
+        copy(
+            self,
+            "LICENSE.md",
+            f"{self.build_folder}",
+            f"{self.package_folder}/licenses",
+        )
         copy(
             self,
             "*.[ht]pp",
