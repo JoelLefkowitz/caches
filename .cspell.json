@@ -11,7 +11,7 @@
   "ignorePaths": [".git", ".vscode", "build"],
   "words": [
     "apidoc",
-    "bindirs",
+    "bindir",
     "bugprone",
     "bumpversion",
     "cbegin",
