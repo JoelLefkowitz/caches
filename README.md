@@ -37,8 +37,6 @@ Documentation and more detailed examples are hosted on [Github Pages](https://jo
 
 caches::FIFOCache<std::string> cache(2);
 
-First in, first out, with a fixed size:
-
 cache.push("a");
 cache.push("b");
 cache.push("c");

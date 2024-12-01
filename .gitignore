@@ -7,6 +7,7 @@ __pycache__/
 *.o
 *conan*.sh
 build/
+CMakeUserPresets.json
 dist/
 metadata/
 node_modules/

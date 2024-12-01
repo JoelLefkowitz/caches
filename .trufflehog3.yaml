@@ -19,6 +19,7 @@ exclude:
 
   - message: Tooling outputs
     paths:
+      - build
       - docs/build
       - docs/dist
       - docs/*/dist
