@@ -2,6 +2,7 @@ import os
 from conan import ConanFile
 from conan.tools.files import copy, get
 from conan.tools.layout import basic_layout
+from conan.tools.scons import SConsDeps
 
 required_conan_version = ">=2.0.0"
 
@@ -52,6 +53,9 @@ class CachesConan(ConanFile):
     def source(self):
         if self.conan_data:
             get(self, **self.conan_data["sources"][self.version], strip_root=True)
+
+    def generate(self):
+        SConsDeps(self).generate()
 
     def export_sources(self):
         for source in self.source_patterns:
