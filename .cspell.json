@@ -38,6 +38,7 @@
     "gtest",
     "hicpp",
     "lefkowitz",
+    "libdirs",
     "matplotlib",
     "miniscons",
     "namespacelist",
