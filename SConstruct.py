@@ -10,13 +10,15 @@ from miniscons import (
 )
 from walkmate import tree
 
-env = conan()
+conandeps = "build/conan/SConscript_conandeps"
+
+env = conan(source=conandeps)
 
 tests = Build(
     "tests",
     tree("src", r"\.cpp$"),
     flags("c++11"),
-    packages(["gtest"]),
+    packages(["gtest"], source=conandeps),
 )
 
 test = Target(
