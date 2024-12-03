@@ -12,6 +12,7 @@
   "words": [
     "apidoc",
     "bindir",
+    "bindirs",
     "bugprone",
     "bumpversion",
     "cbegin",

@@ -11,27 +11,39 @@
 #include <unordered_map>
 #include <vector>
 
-template <typename T>
-caches::StoreCache<T>::StoreCache(size_t limit) : limit(limit) {}
+template <typename K, typename V>
+caches::StoreCache<K, V>::StoreCache(size_t limit) : limit(limit) {}
 
-template <typename T>
-size_t caches::StoreCache<T>::size() const {
+template <typename K, typename V>
+size_t caches::StoreCache<K, V>::size() const {
     return map.size();
 }
 
-template <typename T>
-size_t caches::StoreCache<T>::space() const {
+template <typename K, typename V>
+size_t caches::StoreCache<K, V>::space() const {
     auto current = size();
     return limit > current ? limit - current : 0;
 }
 
-template <typename T>
-bool caches::StoreCache<T>::contains(const std::string &key) const {
+template <typename K, typename V>
+V &caches::StoreCache<K, V>::at(const K &key) {
+    auto it = map.find(key);
+
+    if (it != map.end()) {
+        list.splice(list.begin(), list, it->second);
+        return it->second->second;
+    }
+
+    throw std::range_error("Missing key");
+}
+
+template <typename K, typename V>
+bool caches::StoreCache<K, V>::contains(const K &key) const {
     return map.find(key) != map.end();
 }
 
-template <typename T>
-void caches::StoreCache<T>::store(const std::string &key, T &&value) {
+template <typename K, typename V>
+void caches::StoreCache<K, V>::store(const K &key, V &&value) {
     auto it = map.find(key);
 
     list.push_front(std::make_pair(key, std::move(value)));
@@ -50,18 +62,6 @@ void caches::StoreCache<T>::store(const std::string &key, T &&value) {
         map.erase(last->first);
         list.pop_back();
     }
-}
-
-template <typename T>
-T &caches::StoreCache<T>::at(const std::string &key) {
-    auto it = map.find(key);
-
-    if (it != map.end()) {
-        list.splice(list.begin(), list, it->second);
-        return it->second->second;
-    }
-
-    throw std::range_error("Missing key");
 }
 
 #endif

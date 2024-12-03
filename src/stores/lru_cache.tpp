@@ -38,6 +38,11 @@ V caches::LRUCache<K, V>::operator[](const K &key) {
 }
 
 template <typename K, typename V>
+bool caches::LRUCache<K, V>::contains(const K &key) const {
+    return map.find(key) != map.end();
+}
+
+template <typename K, typename V>
 void caches::LRUCache<K, V>::store(const K &key, const V &value) {
     auto it = map.find(key);
     list.push_front(std::pair<K, V>(key, value));
@@ -56,11 +61,6 @@ void caches::LRUCache<K, V>::store(const K &key, const V &value) {
         map.erase(last->first);
         list.pop_back();
     }
-}
-
-template <typename K, typename V>
-bool caches::LRUCache<K, V>::contains(const K &key) const {
-    return map.find(key) != map.end();
 }
 
 #endif

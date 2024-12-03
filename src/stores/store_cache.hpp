@@ -12,17 +12,17 @@
 #include <unordered_map>
 
 // cppclean-disable-next-line
-#include "lru_cache.hpp"
+#include "../abstract/aliases.hpp"
 
 namespace caches {
-    template <typename T>
+    template <typename K, typename V>
     class StoreCache {
       protected:
         size_t limit;
 
-        std::list<std::pair<std::string, T>> list;
+        std::list<std::pair<K, V>> list;
 
-        std::unordered_map<std::string, Pairs<std::string, T>> map;
+        std::unordered_map<K, Pairs<K, V>> map;
 
       public:
         explicit StoreCache(size_t limit = 100);
@@ -30,11 +30,11 @@ namespace caches {
         size_t size() const;
         size_t space() const;
 
-        bool contains(const std::string &key) const;
+        V &at(const K &key);
 
-        void store(const std::string &key, T &&value);
+        bool contains(const K &key) const;
 
-        T &at(const std::string &key);
+        void store(const K &key, V &&value);
     };
 }
 

@@ -1,6 +1,5 @@
 from miniscons import (
     Build,
-    Flag,
     Routine,
     Script,
     Target,

@@ -1,63 +1,62 @@
 #include "store_cache.tpp"
 #include <gtest/gtest.h>
+#include <string>
 
 using namespace caches;
 
-class TestResource {
+class Resource {
   public:
-    std::string str;
+    size_t id;
 
-    explicit TestResource(std::string str) : str(std::move(str)) {}
+    explicit Resource(size_t id) : id(id) {}
 
-    TestResource(const TestResource &)            = delete;
-    TestResource &operator=(const TestResource &) = delete;
+    Resource(const Resource &)            = delete;
+    Resource &operator=(const Resource &) = delete;
 
-    TestResource(TestResource &&resource) noexcept : str(std::move(resource.str)) {}
+    Resource(Resource &&resource) noexcept : id(resource.id) {}
 
-    TestResource &operator=(TestResource &&) = delete;
+    Resource &operator=(Resource &&) = delete;
 
-    ~TestResource() = default;
-
-    bool operator==(const TestResource &rhs) const { return str == rhs.str; }
+    ~Resource() = default;
 };
 
 TEST(StoreCache, Store) {
-    StoreCache<TestResource> cache;
+    StoreCache<std::string, Resource> cache;
 
-    cache.store("a", TestResource("a"));
-    EXPECT_EQ(cache.at("a").str, "a");
+    cache.store("a", Resource(1));
+    EXPECT_EQ(cache.at("a").id, 1);
 
-    cache.store("b", TestResource("b"));
-    EXPECT_EQ(cache.at("b").str, "b");
+    cache.store("b", Resource(2));
+    EXPECT_EQ(cache.at("b").id, 2);
 }
 
 TEST(StoreCache, Limit) {
-    StoreCache<TestResource> cache(2);
+    StoreCache<std::string, Resource> cache(2);
     EXPECT_EQ(cache.size(), 0UL);
     EXPECT_EQ(cache.space(), 2UL);
 
-    cache.store("a", TestResource("a"));
+    cache.store("a", Resource(1));
     EXPECT_EQ(cache.size(), 1UL);
     EXPECT_EQ(cache.space(), 1UL);
 
-    cache.store("b", TestResource("b"));
+    cache.store("b", Resource(2));
     EXPECT_EQ(cache.size(), 2UL);
     EXPECT_EQ(cache.space(), 0UL);
 
-    cache.store("c", TestResource("c"));
+    cache.store("c", Resource(3));
     EXPECT_EQ(cache.size(), 2UL);
     EXPECT_EQ(cache.space(), 0UL);
 }
 
 TEST(StoreCache, Lru) {
-    StoreCache<TestResource> cache(2);
+    StoreCache<std::string, Resource> cache(2);
 
-    cache.store("a", TestResource("a"));
-    cache.store("b", TestResource("b"));
+    cache.store("a", Resource(1));
+    cache.store("b", Resource(2));
 
     cache.at("a");
 
-    cache.store("c", TestResource("c"));
+    cache.store("c", Resource(3));
 
     EXPECT_TRUE(cache.contains("a"));
     EXPECT_TRUE(cache.contains("c"));

@@ -44,6 +44,6 @@ TEST(LRUCache, Lru) {
 
     EXPECT_TRUE(cache.contains("a"));
     EXPECT_TRUE(cache.contains("c"));
-    
+
     EXPECT_FALSE(cache.contains("b"));
 }

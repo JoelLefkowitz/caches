@@ -99,8 +99,9 @@ cache["c"] ->  3
 ### StoreCache
 
 - Pops the least recently accessed key
-- Fixed size cache of `string: T` pairs
-- Access by reference with `T &at(const std::string &key)`
+- Fixed size cache of generic `K: V` pairs
+- Store with move semantics with `void store(const K &key, V &&value)`
+- Access by reference with `V &at(const K &key)`
 
 <div align='center'>
     <img width=300 height=400 src='docs/images/StoreCache.png'alt='StoreCache' />
@@ -110,15 +111,26 @@ cache["c"] ->  3
 #include <string>
 #include <caches/stores/store_cache.tpp>
 
-caches::StoreCache<int> cache(2);
+class Resource {
+  public:
+    size_t id;
 
-cache.store("a", 1);
-cache.store("b", 2);
-cache.store("c", 3);
+    Resource(const Resource &) = delete;    
+
+    Resource(Resource &&resource) noexcept : id(resource.id) {}
+
+    ...
+};
+
+caches::StoreCache<std::string, Resource> cache(2);
+
+cache.store("a", Resource(1));
+cache.store("b", Resource(2));
+cache.store("c", Resource(3));
 
 cache.size() -> 2UL
-cache.at("b") -> 2
-cache.at("c") -> 3
+cache.at("b").id -> 2UL
+cache.at("c").id -> 3UL
 ```
 
 ### Use case for `caches::StoreCache`
@@ -126,36 +138,12 @@ cache.at("c") -> 3
 Consider the following scenario:
 
 - You need to generate textures for a game renderer
+- You have disabled the copy constructor since they are large objects
 - The textures can be given unique names so they can be reused
 - Eventually each texture won't be needed when the game scene moves on
 
-You need to store the textures in a `map` but you need to remove the oldest textures when adding new ones to limit the container size.
+The `caches::StoreCache` lets you store the textures in a `map` using their `id`s as keys. They are transferred using move semantics and the least recently used textures are deleted when the container size is reached.
 
-This is a sufficiently frequent scenario for a generic template: `caches::StoreCache` which tracks the least recently used key and allows access by reference:
-
-```cpp
-#include <string>
-#include <caches/stores/store_cache.tpp>
-
-class Texture() { ... }
-
-caches::StoreCache<Texture> cache(2);
-
-Texture texture_a;
-cache.store("a", texture_a);
-
-Texture texture_b;
-cache.store("b", texture_b);
-
-Texture texture_c;
-
-// This pops texture_a
-cache.store("c", texture_c);
-
-cache.size() -> 2UL
-cache.at("b") -> texture_b
-cache.at("c") -> texture_c
-```
 
 ## Tooling
 

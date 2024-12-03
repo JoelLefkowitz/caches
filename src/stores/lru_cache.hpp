@@ -9,10 +9,10 @@
 #include <stdexcept>
 #include <unordered_map>
 
-namespace caches {
-    template <typename K, typename V>
-    using Pairs = typename std::list<std::pair<K, V>>::iterator;
+// cppclean-disable-next-line
+#include "../abstract/aliases.hpp"
 
+namespace caches {
     template <typename K, typename V>
     class LRUCache {
       private:
@@ -25,10 +25,10 @@ namespace caches {
       public:
         explicit LRUCache(size_t limit = 100);
 
-        V operator[](const K &key);
-
         size_t size() const;
         size_t space() const;
+
+        V operator[](const K &key);
 
         bool contains(const K &key) const;
 
