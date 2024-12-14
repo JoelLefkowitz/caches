@@ -1,7 +1,9 @@
 {
   "packageManager": "yarn@4.1.1",
   "scripts": {
-    "postinstall": "husky"
+    "postinstall": "husky",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
   },
   "devDependencies": {
     "cspell": "^8.0.0",

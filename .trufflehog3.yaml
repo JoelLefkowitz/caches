@@ -17,9 +17,14 @@ exclude:
       - node_modules
       - venv
 
+  - message: Versioning
+    paths:
+      - conandata.yml
+  
   - message: Tooling outputs
     paths:
       - build
+      - CMakeCache.txt
       - docs/build
       - docs/dist
       - docs/*/dist

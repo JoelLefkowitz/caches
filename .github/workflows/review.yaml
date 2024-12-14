@@ -17,3 +17,8 @@ jobs:
 
       - name: Run tests
         run: scons test
+
+      - name: Compile the tagged version with the test package
+        run: >
+          conan create publish/all/conanfile.py
+            --version $(yq -r ".versions | keys | .[0]" publish/config.yml)

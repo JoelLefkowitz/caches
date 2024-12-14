@@ -3,6 +3,7 @@
 Extensible cache templates.
 
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/caches/review.yaml)
+![Version](https://img.shields.io/conan/v/caches)
 ![Quality](https://img.shields.io/codacy/grade/980b16173dc7422bbd4b67a79e2e985b)
 
 ## Installing
@@ -115,7 +116,7 @@ class Resource {
   public:
     size_t id;
 
-    Resource(const Resource &) = delete;    
+    Resource(const Resource &) = delete;
 
     Resource(Resource &&resource) noexcept : id(resource.id) {}
 
@@ -143,7 +144,6 @@ Consider the following scenario:
 - Eventually each texture won't be needed when the game scene moves on
 
 The `caches::StoreCache` lets you store the textures in a `map` using their `id`s as keys. They are transferred using move semantics and the least recently used textures are deleted when the container size is reached.
-
 
 ## Tooling
 

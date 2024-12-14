@@ -10,6 +10,7 @@ from miniscons import (
 )
 from walkmate import tree
 
+name = "caches"
 conandeps = "build/conan/SConscript_conandeps"
 
 env = conan(source=conandeps)
@@ -36,7 +37,7 @@ cspell = Script(
 
 cppclean = Script(
     "cppclean",
-    ["cppclean", "."],
+    ["cppclean", "src"],
 )
 
 cppcheck = Script(

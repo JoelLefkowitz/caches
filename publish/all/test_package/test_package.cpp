@@ -13,4 +13,5 @@ int main() {
     caches::FIFOCache<Resource>();
     caches::LRUCache<std::string, Resource>();
     caches::StoreCache<std::string, Resource>();
+    return 0;
 }

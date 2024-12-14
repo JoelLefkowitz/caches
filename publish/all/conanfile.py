@@ -1,14 +1,13 @@
 import os
 
 from conan import ConanFile
-from conan.tools.files import copy
+from conan.tools.files import copy, get
 from conan.tools.layout import basic_layout
 
 
 class CachesConan(ConanFile):
     name = "caches"
     description = "Extensible cache templates."
-    version = "0.4.0"
     license = "MIT"
 
     url = "https://github.com/conan-io/conan-center-index"
@@ -31,7 +30,6 @@ class CachesConan(ConanFile):
     )
 
     no_copy_source = True
-    exports = "src/*"
 
     def layout(self):
         basic_layout(self, src_folder="src")
@@ -39,8 +37,8 @@ class CachesConan(ConanFile):
     def package_id(self):
         self.info.clear()
 
-    def build_requirements(self):
-        self.test_requires("gtest/1.12.1")
+    def source(self):
+        get(self, **self.conan_data["sources"][self.version], strip_root=True)
 
     def build(self):
         pass
@@ -49,13 +47,13 @@ class CachesConan(ConanFile):
         copy(
             self,
             "LICENSE.md",
-            self.recipe_folder,
+            self.source_folder,
             os.path.join(self.package_folder, "licenses"),
         )
         copy(
             self,
             "*.[ht]pp",
-            os.path.join(self.recipe_folder, "src"),
+            os.path.join(self.source_folder, "src"),
             os.path.join(self.package_folder, "include", self.name),
         )
 
