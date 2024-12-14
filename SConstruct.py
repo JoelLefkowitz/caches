@@ -11,7 +11,7 @@ from miniscons import (
 from walkmate import tree
 
 name = "caches"
-conandeps = "build/conan/SConscript_conandeps"
+conandeps = "build-release/conan/SConscript_conandeps"
 
 env = conan(source=conandeps)
 
