@@ -8,8 +8,8 @@
         "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
       ],
       "compilerPath": "/usr/bin/clang",
-      "cStandard": "c11",
-      "cppStandard": "c++11",
+      "cStandard": "c17",
+      "cppStandard": "c++20",
       "intelliSenseMode": "macos-clang-arm64"
     }
   ],

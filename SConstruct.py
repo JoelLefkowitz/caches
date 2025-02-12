@@ -35,11 +35,6 @@ cspell = Script(
     ["npx", "cspell", ".", "--dot", "--gitignore"],
 )
 
-cppclean = Script(
-    "cppclean",
-    ["cppclean", "src"],
-)
-
 cppcheck = Script(
     "cppcheck",
     [
@@ -70,7 +65,7 @@ clang_format = Script(
 )
 
 prettier = Script(
-    "prettier",
+    "prettier",p
     ["npx", "prettier", ".", "--write"],
 )
 
@@ -97,7 +92,7 @@ sphinx = Script(
 
 lint = Routine(
     "lint",
-    [cspell, cppclean, trufflehog],
+    [cspell, cppcheck, trufflehog],
 )
 
 fmt = Routine(
