@@ -9,7 +9,8 @@
 #include <vector>
 
 template <typename T>
-caches::LIFOCache<T>::LIFOCache(size_t limit) : DequeCache<T>(limit) {}
+caches::LIFOCache<T>::LIFOCache(size_t limit) : DequeCache<T>(limit) {
+}
 
 template <typename T>
 T caches::LIFOCache<T>::next() const {

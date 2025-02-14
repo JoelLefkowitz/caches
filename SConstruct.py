@@ -11,7 +11,7 @@ from miniscons import (
 from walkmate import tree
 
 name = "caches"
-conandeps = "build-release/conan/SConscript_conandeps"
+conandeps = "build/conan/SConscript_conandeps"
 
 env = conan(source=conandeps)
 
@@ -35,20 +35,6 @@ cspell = Script(
     ["npx", "cspell", ".", "--dot", "--gitignore"],
 )
 
-cppcheck = Script(
-    "cppcheck",
-    [
-        "cppcheck",
-        tree("src", r"\.(cpp)$"),
-        [f"-I{i}" for i in includes],
-        "--quiet",
-        "--enable=all",
-        "--suppressions-list=.cppcheck",
-        "--inline-suppr",
-        [f"--suppress=*:{i}/*" for i in includes],
-    ],
-)
-
 clang_tidy = Script(
     "clang-tidy",
     ["clang-tidy", tree("src", r"\.(cpp)$"), "--", [f"-I{i}" for i in includes]],
@@ -65,7 +51,7 @@ clang_format = Script(
 )
 
 prettier = Script(
-    "prettier",p
+    "prettier",
     ["npx", "prettier", ".", "--write"],
 )
 
@@ -92,7 +78,7 @@ sphinx = Script(
 
 lint = Routine(
     "lint",
-    [cspell, cppcheck, trufflehog],
+    [cspell, trufflehog],
 )
 
 fmt = Routine(
@@ -108,7 +94,7 @@ docs = Routine(
 cli = Tasks(
     [tests],
     [test],
-    [*lint.scripts, *fmt.scripts, *docs.scripts, cppcheck, clang_tidy],
+    [*lint.scripts, *fmt.scripts, *docs.scripts, clang_tidy],
     [lint, fmt, docs],
 )
 

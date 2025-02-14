@@ -8,12 +8,14 @@ class Resource {
   public:
     size_t id;
 
-    explicit Resource(size_t id) : id(id) {}
+    explicit Resource(size_t id) : id(id) {
+    }
 
     Resource(const Resource &)            = delete;
     Resource &operator=(const Resource &) = delete;
 
-    Resource(Resource &&resource) noexcept : id(resource.id) {}
+    Resource(Resource &&resource) noexcept : id(resource.id) {
+    }
 
     Resource &operator=(Resource &&) = delete;
 

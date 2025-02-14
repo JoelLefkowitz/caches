@@ -12,7 +12,8 @@
 #include <vector>
 
 template <typename K, typename V>
-caches::LRUCache<K, V>::LRUCache(size_t limit) : limit(limit) {}
+caches::LRUCache<K, V>::LRUCache(size_t limit) : limit(limit) {
+}
 
 template <typename K, typename V>
 size_t caches::LRUCache<K, V>::size() const {

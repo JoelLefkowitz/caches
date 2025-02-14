@@ -10,7 +10,8 @@
 
 template <typename T>
 caches::DequeCache<T>::DequeCache(size_t limit) : limit(limit)
-                                                , cache({}) {}
+                                                , cache({}) {
+}
 
 template <typename T>
 typename std::deque<T>::iterator caches::DequeCache<T>::begin() {

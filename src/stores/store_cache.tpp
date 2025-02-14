@@ -12,7 +12,8 @@
 #include <vector>
 
 template <typename K, typename V>
-caches::StoreCache<K, V>::StoreCache(size_t limit) : limit(limit) {}
+caches::StoreCache<K, V>::StoreCache(size_t limit) : limit(limit) {
+}
 
 template <typename K, typename V>
 size_t caches::StoreCache<K, V>::size() const {
