@@ -1,8 +1,9 @@
 import os
-
 from conan import ConanFile
 from conan.tools.files import copy, get
 from conan.tools.layout import basic_layout
+
+required_conan_version = ">=2.0.0"
 
 
 class CachesConan(ConanFile):
@@ -12,6 +13,7 @@ class CachesConan(ConanFile):
 
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/JoelLefkowitz/caches"
+    author = "Joel Lefkowitz (joellefkowitz@hotmail.com)"
 
     topics = (
         "cache",
@@ -21,7 +23,6 @@ class CachesConan(ConanFile):
         "header-only",
     )
 
-    package_type = "header-library"
     settings = (
         "os",
         "arch",
@@ -29,6 +30,7 @@ class CachesConan(ConanFile):
         "build_type",
     )
 
+    package_type = "header-library"
     no_copy_source = True
 
     def layout(self):
@@ -38,7 +40,11 @@ class CachesConan(ConanFile):
         self.info.clear()
 
     def source(self):
-        get(self, **self.conan_data["sources"][self.version], strip_root=True)
+        get(
+            self,
+            **self.conan_data["sources"][self.version],
+            strip_root=True,
+        )
 
     def build(self):
         pass
