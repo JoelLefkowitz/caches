@@ -189,6 +189,22 @@ To run formatters:
 scons format
 ```
 
+### Publishing
+
+The [ConanCenter](https://conan.io/center) doesn't yet allow users to publish packages independently. Package recipes are submitted to the [conan-center-index](https://github.com/conan-io/conan-center-index). A copy of this recipe is kept in this repository in the `publish` folder. This allows us to test that the recipe is compatible with new versions and makes it easier to submit updates to the conan-center-index.
+
+To test the recipe can build the latest published tag:
+
+```bash
+conan create publish/all/conanfile.py --version $(yq -r ".versions | keys | .[0]" publish/config.yml)
+```
+
+This will fetch the sources and create a locally cached version of the package. This version can also be published to a local remote for testing:
+
+```bash
+conan upload <package>/<version> -r <remote>
+```
+
 ### Toolchains
 
 Scripts are defined in the `scripts` folder and can be invoked with `toolchains`:
