@@ -4,7 +4,7 @@ from glob import glob
 
 project = "Caches"
 package = "caches"
-version = "0.4.0"
+version = "0.5.0"
 
 project_copyright = f"{date.today().year} Joel Lefkowitz"
 
