@@ -65,4 +65,15 @@ void caches::StoreCache<K, V>::store(const K &key, V &&value) {
     }
 }
 
+template <typename K, typename V>
+bool caches::StoreCache<K, V>::empty() const {
+    return list.empty();
+}
+
+template <typename K, typename V>
+void caches::StoreCache<K, V>::clear() {
+    list.clear();
+    map.clear();
+}
+
 #endif

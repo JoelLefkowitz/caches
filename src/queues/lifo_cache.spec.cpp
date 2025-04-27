@@ -59,3 +59,15 @@ TEST(LIFOCache, Slice) {
     EXPECT_EQ(cache.slice(3), std::vector<int>({1, 2, 3}));
     EXPECT_EQ(cache.slice(10), std::vector<int>({1, 2, 3}));
 }
+
+TEST(LIFOCache, Clear) {
+    LIFOCache<int> cache(3);
+
+    cache.push(1);
+    EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_FALSE(cache.empty());
+
+    cache.clear();
+    EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_TRUE(cache.empty());
+}

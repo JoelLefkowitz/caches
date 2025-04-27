@@ -38,6 +38,8 @@ namespace caches {
         size_t space() const;
 
         bool empty() const;
+
+        void clear();
     };
 }
 

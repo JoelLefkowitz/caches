@@ -64,4 +64,15 @@ void caches::LRUCache<K, V>::store(const K &key, const V &value) {
     }
 }
 
+template <typename K, typename V>
+bool caches::LRUCache<K, V>::empty() const {
+    return list.empty();
+}
+
+template <typename K, typename V>
+void caches::LRUCache<K, V>::clear() {
+    list.clear();
+    map.clear();
+}
+
 #endif

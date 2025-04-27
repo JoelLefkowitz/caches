@@ -47,3 +47,15 @@ TEST(LRUCache, Lru) {
 
     EXPECT_FALSE(cache.contains("b"));
 }
+
+TEST(LRUCache, Clear) {
+    LRUCache<std::string, int> cache(2);
+
+    cache.store("a", 1);
+    EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_FALSE(cache.empty());
+
+    cache.clear();
+    EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_TRUE(cache.empty());
+}

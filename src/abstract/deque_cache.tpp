@@ -49,4 +49,9 @@ bool caches::DequeCache<T>::empty() const {
     return cache.empty();
 }
 
+template <typename T>
+void caches::DequeCache<T>::clear() {
+    cache.clear();
+}
+
 #endif

@@ -35,6 +35,10 @@ namespace caches {
         bool contains(const K &key) const;
 
         void store(const K &key, V &&value);
+
+        bool empty() const;
+
+        void clear();
     };
 }
 

@@ -65,3 +65,15 @@ TEST(StoreCache, Lru) {
 
     EXPECT_FALSE(cache.contains("b"));
 }
+
+TEST(StoreCache, Clear) {
+    StoreCache<std::string, Resource> cache(2);
+
+    cache.store("a", Resource(1));
+    EXPECT_EQ(cache.size(), 1UL);
+    EXPECT_FALSE(cache.empty());
+
+    cache.clear();
+    EXPECT_EQ(cache.size(), 0UL);
+    EXPECT_TRUE(cache.empty());
+}
