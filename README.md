@@ -143,7 +143,7 @@ Consider the following scenario:
 - The textures can be given unique names so they can be reused
 - Eventually each texture won't be needed when the game scene moves on
 
-The `caches::StoreCache` lets you store the textures in a `map` using their `id`s as keys. They are transferred using move semantics and the least recently used textures are deleted when the container size is reached.
+The `caches::StoreCache` lets you store the textures in a `map` using their `id`s as keys. They are transferred using move semantics and the least recently used textures are deleted if the container size is reached.
 
 ## Tooling
 
